@@ -1,0 +1,125 @@
+.slider {
+	position: relative;
+
+	& .sl-track {
+		display: flex;
+		gap: 20px;
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+		scroll-snap-type: x mandatory;
+		scroll-padding-left: var(--gutter);
+		padding: 8px var(--gutter) 24px;
+		margin: 0 calc(-1 * var(--gutter));
+		scrollbar-width: none;
+		cursor: grab;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+		& > * {
+			flex: 0 0 var(--sl-w, 340px);
+			scroll-snap-align: start;
+		}
+
+		&.is-drag {
+			cursor: grabbing;
+			scroll-snap-type: none;
+			user-select: none;
+
+			& a,
+			& img {
+				pointer-events: none;
+			}
+		}
+	}
+
+	& .sl-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		margin-top: 16px;
+	}
+
+	& .sl-progress {
+		flex: 1;
+		max-width: 320px;
+		height: 2px;
+		background: var(--c-line-2);
+		overflow: hidden;
+
+		& span {
+			display: block;
+			height: 100%;
+			background: currentColor;
+			transform-origin: left;
+			transform: scaleX(var(--sl-p, .1));
+			transition: transform .3s var(--ease);
+		}
+	}
+
+	& .sl-nav {
+		display: flex;
+		gap: 10px;
+	}
+
+	& .sl-btn {
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		border: 1px solid var(--c-line-2);
+		background: transparent;
+		color: inherit;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		transition: background .35s, color .35s, opacity .35s, transform .45s var(--ease);
+
+		&.is-prev svg {
+			transform: scaleX(-1);
+		}
+
+		&:disabled {
+			opacity: .3;
+			cursor: default;
+		}
+
+		@media (hover: hover) {
+			&:not(:disabled):hover {
+				background: var(--c-ink);
+				border-color: var(--c-ink);
+				color: var(--c-bg);
+			}
+		}
+	}
+
+	&.slider--dark {
+		& .sl-progress {
+			background: rgba(244, 240, 232, .2);
+		}
+
+		& .sl-btn {
+			border-color: rgba(244, 240, 232, .3);
+		}
+	}
+
+	& .sl-track > .is-active-slide {
+		transition: transform .6s var(--ease);
+	}
+
+	@media (max-width: 760px) {
+		& .sl-track > * {
+			flex-basis: var(--sl-w-m, 78vw);
+		}
+
+		& .sl-nav {
+			display: none;
+		}
+
+		& .sl-progress {
+			max-width: none;
+		}
+	}
+}

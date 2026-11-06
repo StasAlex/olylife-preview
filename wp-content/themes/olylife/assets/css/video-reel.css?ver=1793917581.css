@@ -1,0 +1,200 @@
+.vreel {
+	display: flex;
+	gap: 14px;
+	height: clamp(460px, 64vh, 640px);
+
+	& .vreel-item {
+		position: relative;
+		flex: 1 1 0;
+		min-width: 0;
+		margin: 0;
+		overflow: hidden;
+		border-radius: var(--r-card);
+		background: var(--c-footer);
+		cursor: pointer;
+		transition: flex-grow .9s var(--ease), border-radius .9s var(--ease);
+		outline-offset: 4px;
+
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(180deg, rgba(18, 27, 22, 0) 40%, rgba(18, 27, 22, .85) 100%);
+			pointer-events: none;
+		}
+
+		& video {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			filter: brightness(.5) saturate(.6);
+			transform: scale(1.12);
+			transition: filter .9s var(--ease), transform 1.4s var(--ease);
+		}
+
+		& .vreel-side {
+			position: absolute;
+			left: 24px;
+			bottom: 28px;
+			z-index: 1;
+			writing-mode: vertical-rl;
+			transform: rotate(180deg);
+			font-family: var(--f-display);
+			font-size: 26px;
+			line-height: 1;
+			white-space: nowrap;
+			color: var(--c-bg);
+			transition: opacity .4s, transform .6s var(--ease);
+		}
+
+		& figcaption {
+			position: absolute;
+			left: 32px;
+			right: 120px;
+			bottom: 32px;
+			z-index: 1;
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+			opacity: 0;
+			transform: translateY(24px);
+			transition: opacity .4s, transform .7s var(--ease);
+
+			& strong {
+				font-family: var(--f-display);
+				font-size: clamp(28px, 2.6vw, 40px);
+				font-weight: 500;
+				line-height: 1.05;
+			}
+
+			& small {
+				font-size: 13px;
+				color: var(--c-stone);
+			}
+		}
+
+		& .vreel-play {
+			position: absolute;
+			right: 28px;
+			bottom: 28px;
+			z-index: 2;
+			display: grid;
+			place-items: center;
+			width: 72px;
+			height: 72px;
+			border: 0;
+			border-radius: 50%;
+			background: var(--c-gold);
+			color: var(--c-ink);
+			cursor: pointer;
+			opacity: 0;
+			transform: scale(.5) rotate(-90deg);
+			transition: opacity .4s, transform .7s var(--ease);
+
+			&::before {
+				content: "";
+				position: absolute;
+				inset: -8px;
+				border: 1px solid rgba(231, 184, 134, .5);
+				border-radius: 50%;
+				animation: pulse-ring 2s var(--ease) infinite;
+			}
+		}
+
+		&.is-active {
+			flex-grow: 3.4;
+
+			& video {
+				filter: none;
+				transform: scale(1);
+			}
+
+			& .vreel-side {
+				opacity: 0;
+				transform: rotate(180deg) translateY(-24px);
+			}
+
+			& figcaption {
+				opacity: 1;
+				transform: none;
+				transition-delay: .25s;
+			}
+
+			& .vreel-play {
+				opacity: 1;
+				transform: none;
+				transition-delay: .3s;
+			}
+		}
+
+		&.is-sound {
+			cursor: auto;
+
+			&::after,
+			& figcaption,
+			& .vreel-play {
+				opacity: 0;
+				pointer-events: none;
+			}
+		}
+
+		@media (hover: hover) {
+			&:not(.is-active):hover video {
+				filter: brightness(.7) saturate(.85);
+			}
+
+			& .vreel-play:hover {
+				transform: scale(1.08);
+			}
+		}
+	}
+
+	@media (max-width: 760px) {
+		height: auto;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scrollbar-width: none;
+		margin: 0 calc(-1 * var(--gutter));
+		padding: 0 var(--gutter);
+		scroll-padding-left: var(--gutter);
+
+		& .vreel-item,
+		& .vreel-item.is-active {
+			flex: 0 0 84%;
+			aspect-ratio: 4 / 5;
+			scroll-snap-align: start;
+		}
+
+		& .vreel-item {
+			& .vreel-side {
+				display: none;
+			}
+
+			& figcaption,
+			& .vreel-play {
+				opacity: 1;
+				transform: none;
+			}
+
+			& figcaption {
+				left: 20px;
+				right: 96px;
+				bottom: 20px;
+			}
+
+			& .vreel-play {
+				right: 20px;
+				bottom: 20px;
+				width: 60px;
+				height: 60px;
+			}
+
+			& video {
+				filter: brightness(.85);
+				transform: none;
+			}
+		}
+	}
+}

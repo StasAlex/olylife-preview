@@ -1,0 +1,149 @@
+.pcard {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border-radius: var(--r-card);
+	background: var(--c-card);
+	color: var(--c-ink);
+	text-decoration: none;
+	transition: box-shadow .9s var(--ease), transform .9s var(--ease);
+
+	& .pcard-media {
+		position: relative;
+		display: block;
+		aspect-ratio: 1 / 1;
+		background: #0C0C0C;
+
+		& img {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		& .main {
+			transition: transform 1.4s var(--ease);
+		}
+
+		& .is-contain {
+			object-fit: contain;
+		}
+
+		& .alt {
+			object-fit: contain;
+			background: #FFF;
+			opacity: 0;
+			transition: opacity .7s var(--ease);
+		}
+	}
+
+	& .pcard-tag {
+		position: absolute;
+		left: 16px;
+		top: 16px;
+		z-index: 4;
+		padding: 6px 12px;
+		border-radius: 999px;
+		background: rgba(251, 249, 245, .92);
+		font-size: 12px;
+		font-weight: 600;
+	}
+
+	& .pcard-body {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		padding: 24px;
+	}
+
+	& .pcard-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 12px;
+	}
+
+	& .pcard-name {
+		font-family: var(--f-display);
+		font-weight: 500;
+		font-size: 28px;
+		line-height: 1.1;
+	}
+
+	& .pcard-price {
+		font-family: var(--f-display);
+		font-size: 26px;
+		white-space: nowrap;
+	}
+
+	& .pcard-desc {
+		font-size: 14px;
+		color: var(--c-muted);
+	}
+
+	& .qa {
+		margin-top: auto;
+		padding-top: 12px;
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--c-green-dark);
+	}
+
+	@media (hover: hover) {
+		& .qa {
+			opacity: 0;
+			transform: translateY(12px);
+			transition: opacity .6s var(--ease), transform .6s var(--ease);
+		}
+
+		&:hover,
+		&:focus-visible {
+			box-shadow: 0 0 0 1px rgba(231, 184, 134, .5), 0 50px 90px -40px rgba(23, 35, 28, .5);
+
+			& .main {
+				transform: scale(1.06);
+			}
+
+			& .alt {
+				opacity: 1;
+			}
+
+			& .qa {
+				opacity: 1;
+				transform: none;
+			}
+
+			& .prem::after {
+				transform: translateX(135%);
+			}
+
+			& .prem::before {
+				opacity: 1;
+				transform: translate(-50%, -50%) scale(1.15);
+			}
+		}
+	}
+}
+
+.pcard--wide .pcard-media {
+	aspect-ratio: 4 / 3.4;
+}
+
+.pcard--tall .pcard-media {
+	aspect-ratio: 1 / 1.05;
+}
+
+.pcard .pcard-media.light {
+	background: radial-gradient(120% 95% at 50% 38%, #FFF 0%, #F3EFE7 62%, #E4DDD0 100%);
+
+	& .main {
+		object-fit: cover;
+		mix-blend-mode: normal;
+	}
+}

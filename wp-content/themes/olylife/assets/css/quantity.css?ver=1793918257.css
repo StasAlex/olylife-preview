@@ -1,0 +1,128 @@
+.woocommerce .quantity {
+	display: inline-flex;
+	align-items: center;
+	height: 56px;
+	padding: 4px;
+	border: 1px solid var(--c-line-2);
+	border-radius: 999px;
+	background: var(--c-card);
+
+	&:has(input[type="hidden"]) {
+		display: none;
+	}
+
+	& .qty {
+		width: 52px;
+		height: 100%;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		font: 600 17px/1 var(--f-body);
+		color: var(--c-ink);
+		text-align: center;
+		appearance: textfield;
+		-moz-appearance: textfield;
+
+		&::-webkit-inner-spin-button,
+		&::-webkit-outer-spin-button {
+			margin: 0;
+			-webkit-appearance: none;
+		}
+
+		&:focus-visible {
+			outline: 0;
+		}
+	}
+
+	&:focus-within {
+		border-color: var(--c-ink);
+	}
+
+	& .qty-btn {
+		position: relative;
+		isolation: isolate;
+		flex: 0 0 auto;
+		width: 46px;
+		height: 46px;
+		padding: 0;
+		border: 0;
+		border-radius: 50%;
+		background: var(--c-sage);
+		color: var(--c-ink);
+		cursor: pointer;
+		transition: color .35s var(--ease), transform .25s var(--ease), opacity .3s;
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			width: 14px;
+			height: 1.5px;
+			margin: -.75px 0 0 -7px;
+			background: currentColor;
+			transition: transform .45s var(--ease);
+		}
+
+		&.is-plus::after {
+			transform: rotate(90deg);
+		}
+
+		&.is-minus::after {
+			display: none;
+		}
+
+		&:disabled {
+			opacity: .35;
+			cursor: default;
+		}
+
+		&:active:not(:disabled) {
+			transform: scale(.9);
+		}
+
+		@media (hover: hover) {
+			&:not(:disabled):hover {
+				background: var(--c-ink);
+				color: var(--c-bg);
+
+				&.is-plus::before {
+					transform: rotate(180deg);
+				}
+
+				&.is-plus::after {
+					transform: rotate(270deg);
+				}
+
+				&.is-minus::before {
+					transform: scaleX(1.3);
+				}
+			}
+		}
+	}
+}
+
+.woocommerce div.product form.cart {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px;
+	margin: 36px 0 8px;
+
+	&::before,
+	&::after {
+		display: none;
+	}
+
+	& .quantity {
+		float: none;
+		margin: 0;
+	}
+
+	& .single_add_to_cart_button {
+		flex: 1 1 220px;
+		float: none;
+		min-height: 56px;
+	}
+}
